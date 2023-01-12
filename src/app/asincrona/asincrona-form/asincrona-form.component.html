@@ -1,0 +1,101 @@
+<p>Este es un formulario de contacto</p>
+<p>Estas son sus validaciones:</p>
+<ol>
+  <li>Los controles no pueden quedar vacíos.</li>
+  <li>El nombre debe tener como mínimo 10 caracteres.</li>
+  <li>El email ingresado debe ser correcto.</li>
+  <li>El mensaje no puede superar los 500 caracteres.</li>
+  <li>Cuando se presione el botón “Confirmar”, mostrar un mensaje indicando si todos los controles se encuentran correctamente ingresados.</li>
+</ol>
+<p>Extra: incluye secciones de ayuda que aparecen al inicio</p>
+<small class="d-none">Miguel DIAZ es un nombre valido.
+  <br>
+  al formulario se le agrega el atributo: #algunNombre=ngForm
+  <br>
+  a los demas inputs se les agrega [(ngModel)]=model.unatributodemodel Y #elmismonombredelatributoosimilar='ngModel' Y required, minlength, etc
+  <br>
+  If ngModel is used within a form tag, either the name attribute must be set or the form
+  control must be defined as 'standalone' ..... cada input debe tener un name
+  <br>aunque a ambos los llame model, no interfieren ni sus dattos se mezclan
+  <br>
+  se le llama banana on the box sintaxis
+</small>
+
+<form #esteFormulario=ngForm>
+
+  <section class="form-group">
+
+    <label for="pNombre">Nombre:</label>
+    <input type="text" name="pNombre" id="pNombre" [(ngModel)]="model.nombre" #unNombre=ngModel required minlength="10" class="form-control">
+
+    <section *ngIf="unNombre.pristine && unNombre.untouched" class="alert alert-info">
+      <p>(Su nombre debe tener al menos 10 caracteres)</p>
+    </section>
+    <section *ngIf="unNombre.invalid &&(unNombre.dirty || unNombre.touched)" class="alert alert-danger">
+      <p [hidden]="unNombre.valid || unNombre.errors?.['required']"> Su nombre debe tener al menos 10 caracteres </p>
+      <p *ngIf="unNombre.errors?.['required']">
+        Su nombre es requerido
+      </p>
+      <p *ngIf="unNombre.errors?.['minlenght']" [hidden]="!unNombre.errors?.['required']">
+        Su nombre debe tener al menos 10 caracteres
+      </p>
+    </section>
+
+  </section>
+
+
+
+  <section class="form-group">
+
+    <label for="pEmail">Email:</label>
+    <input type="email" name="pEmail" id="pEmail" [(ngModel)]="model.email" #unEmail=ngModel required class="form-control">
+
+    <section *ngIf="unEmail.pristine && unEmail.untouched" class="alert alert-info">
+      <p>(Introduzca un email al que tenga acceso)</p>
+    </section>
+
+    <section *ngIf="unEmail.invalid &&(unEmail.dirty || unEmail.touched)" class="alert alert-danger">
+      <p *ngIf="unEmail.errors?.['required']">
+        El email es requerido
+      </p>
+    </section>
+
+  </section>
+
+
+
+  <section class=" form-group">
+    <label for="pMensaje">Mensaje</label>
+    <div class="relative">
+      <textarea name="pMensaje" id="pMensaje" [(ngModel)]="model.mensaje" #unMensaje=ngModel required minlength="1" maxlength="500" class="form-control "></textarea>
+      <span class="absolute-on-corner"> {{model.mensaje.length}} / 500</span>
+    </div>
+
+
+    <section class="form-group">
+      <section *ngIf="unMensaje.pristine && unMensaje.untouched" class="alert alert-info">
+        <p>(Este mensaje tiene un limite de 500 caracteres)</p>
+      </section>
+
+      <section *ngIf="unMensaje.invalid &&(unMensaje.dirty || unMensaje.touched)" class="alert alert-danger">
+        <p *ngIf="unMensaje.errors?.['required']">
+          El mensaje es requerido
+        </p>
+        <p *ngIf="unMensaje.errors?.['maxlength']">
+          Ha excedido el máximo de caracteres
+        </p>
+      </section>
+    </section>
+  </section>
+
+
+
+  <section class="form-group">
+    <button type="button" [disabled]="esteFormulario.form.invalid" (click)="EnviarDatos()" class="btn btn-danger">Confirmar</button>
+  </section>
+
+
+
+</form>
+
+<pre>console.log = {{model|json}}</pre>

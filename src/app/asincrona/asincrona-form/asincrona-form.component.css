@@ -1,0 +1,11 @@
+.relative {
+  position: relative;
+}
+
+.absolute-on-corner {
+  position: absolute;
+  top: 2ch;
+  right: 2ch;
+  z-index: 1;
+  font-size: .7rem;
+}

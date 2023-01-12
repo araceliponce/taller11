@@ -1,0 +1,63 @@
+<!-- hicimos un formulario template, pero ahora es menor usar formularios reactivos -->
+
+<h1>Formulario basado en template</h1>
+<!-- en el form, username y pass y pais son atributos del model que creamos en el .ts -->
+<section class="container-sm">
+  <form #formulario='ngForm'>
+    <!-- agregamos una referencia ngForm aqui y desabilitamos luego condicinalmente el btn enviar -->
+    <section class="form-group">
+      <label for="user">Username</label>
+      <input type="text" class="form-control" name="user" [(ngModel)]="model.username" required #username='ngModel'>
+
+      <!-- validaciones -->
+
+      <section *ngIf="username.invalid &&(username.dirty || username.touched)" class="alert alert-danger">
+
+        <section *ngIf="username.errors?.['required']">
+          El campo es requerido
+        </section>
+      </section>
+    </section>
+
+    <section class="form-group">
+      <label for="pass">Password</label>
+      <input type="password" class="form-control" name="pass" [(ngModel)]="model.pass" required minlength="4" #pass='ngModel'>
+      <!-- #pass = 'ngModel'  crea un referencia -->
+      <!-- validaciones -->
+      <!-- si es invalido y lo modifica o toca -->
+      <section *ngIf="pass.invalid &&(pass.dirty || pass.touched)" class="alert alert-danger">
+
+        <!-- si el error es que intenta enviar un pass vacio ( hay mas tipos de errores posibles) -->
+        <section *ngIf="pass.errors?.['required']">
+          El password es requerido
+        </section>
+
+        <!-- siel error es de minlenght -->
+        <section *ngIf="pass.errors?.['minlenght']">
+          El password debe tener al menos 4 caracteres
+        </section>
+      </section>
+    </section>
+
+    <!-- control select usando componente enum -->
+    <section class="form-group">
+      <label for="paises">selecciona un pais</label>
+      <select class="form-control" name="paises" id="paises" [(ngModel)]="model.pais">
+        <option *ngFor="let item of paises" value="{{item.value}}">{{item.text}}</option>
+      </select>
+    </section>
+
+    <!-- control checkbox -->
+    <section class="form-group">
+      <input type="checkbox" class="form-check-input" name="ofertas" id="ofertas">
+      <label for="ofertas" class="form-check-label">¿desea recibir ofertas?</label>
+    </section>
+
+    <section>
+      <button type="submit" class="btn btn-primary" (click)="Enviar()" [disabled]="!formulario.form.valid">Enviar</button>
+      <!-- tmb existe [disabled]="formulario.form.invalid" -->
+      <button type="cancel" class="btn btn-warning" (click)="Cancelar()">Cancelar</button>
+    </section>
+
+  </form>
+</section>
