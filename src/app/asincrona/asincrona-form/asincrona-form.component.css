@@ -4,8 +4,8 @@
 
 .absolute-on-corner {
   position: absolute;
-  top: 2ch;
-  right: 2ch;
+  top: -4ch;
+  right: 1ch;
   z-index: 1;
   font-size: .7rem;
 }

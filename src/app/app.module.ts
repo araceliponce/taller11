@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AsincronaModule } from './asincrona/asincrona.module';
 import { EnClaseModule } from './en-clase/en-clase.module';
+import { RetoModule } from './reto/reto.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { EnClaseModule } from './en-clase/en-clase.module';
     BrowserModule,
     AppRoutingModule,
     EnClaseModule,
-    AsincronaModule
+    AsincronaModule,
+    RetoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
